@@ -5,7 +5,7 @@ plugins {
 	id("nu.studer.jooq") version "8.2"
 }
 
-group = "com.serasa"
+group = "com.duda"
 version = "0.0.1-SNAPSHOT"
 description = "Demo project for Spring Boot"
 

@@ -1,4 +1,4 @@
-package com.serasa.core;
+package com.duda.core;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
