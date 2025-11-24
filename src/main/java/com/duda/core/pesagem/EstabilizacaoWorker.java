@@ -1,12 +1,12 @@
-package com.serasa.core.pesagem;
+package com.duda.core.pesagem;
 
-import com.serasa.core.balanca.MedicaoBalancaEntity;
-import com.serasa.core.balanca.MedicaoBalancaRepository;
-import com.serasa.core.caminhao.CaminhaoResponseDto;
-import com.serasa.core.caminhao.CaminhaoService;
-import com.serasa.core.demandatransporte.DemandaTransporteEntity;
-import com.serasa.core.demandatransporte.DemandaTransporteService;
-import com.serasa.core.demandatransporte.StatusDemandaTransporte;
+import com.duda.core.balanca.MedicaoBalancaEntity;
+import com.duda.core.balanca.MedicaoBalancaRepository;
+import com.duda.core.caminhao.CaminhaoResponseDto;
+import com.duda.core.caminhao.CaminhaoService;
+import com.duda.core.demandatransporte.DemandaTransporteEntity;
+import com.duda.core.demandatransporte.DemandaTransporteService;
+import com.duda.core.demandatransporte.StatusDemandaTransporte;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

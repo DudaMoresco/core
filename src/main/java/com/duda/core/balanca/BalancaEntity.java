@@ -1,6 +1,6 @@
-package com.serasa.core.balanca;
+package com.duda.core.balanca;
 
-import com.serasa.core.doca.DocaEntity;
+import com.duda.core.doca.DocaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

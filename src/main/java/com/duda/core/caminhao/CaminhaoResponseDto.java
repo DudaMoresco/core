@@ -1,4 +1,4 @@
-package com.serasa.core.caminhao;
+package com.duda.core.caminhao;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

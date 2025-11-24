@@ -1,4 +1,4 @@
-package com.serasa.core.doca;
+package com.duda.core.doca;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

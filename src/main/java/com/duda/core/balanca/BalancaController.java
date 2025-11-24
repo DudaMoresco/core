@@ -1,4 +1,4 @@
-package com.serasa.core.balanca;
+package com.duda.core.balanca;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

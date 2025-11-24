@@ -1,4 +1,4 @@
-package com.serasa.core.caminhao;
+package com.duda.core.caminhao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

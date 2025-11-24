@@ -1,4 +1,4 @@
-package com.serasa.core.filial;
+package com.duda.core.filial;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -44,14 +44,14 @@ public class FilialEntity {
     @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "created_by", length = 255, updatable = false, nullable = false)
+    @Column(name = "created_by", updatable = false, nullable = false)
     private String createdBy;
 
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @Column(name = "updated_by", length = 255, nullable = false)
+    @Column(name = "updated_by",nullable = false)
     private String updatedBy;
 
     public FilialEntity(String nome, String cnpj, String createdBy) {

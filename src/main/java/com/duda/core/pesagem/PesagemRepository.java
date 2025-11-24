@@ -1,4 +1,4 @@
-package com.serasa.core.pesagem;
+package com.duda.core.pesagem;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,7 +1,7 @@
-package com.serasa.core.balanca;
+package com.duda.core.balanca;
 
-import com.serasa.core.doca.DocaEntity;
-import com.serasa.core.doca.DocaRepository;
+import com.duda.core.doca.DocaEntity;
+import com.duda.core.doca.DocaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

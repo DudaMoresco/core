@@ -1,4 +1,4 @@
-package com.serasa.core.balanca;
+package com.duda.core.balanca;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

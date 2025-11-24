@@ -1,4 +1,4 @@
-package com.serasa.core.caminhao;
+package com.duda.core.caminhao;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;

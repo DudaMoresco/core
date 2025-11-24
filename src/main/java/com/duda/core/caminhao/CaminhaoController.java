@@ -1,7 +1,5 @@
-package com.serasa.core.caminhao;
+package com.duda.core.caminhao;
 
-import com.serasa.core.filial.FilialCreateDto;
-import com.serasa.core.filial.FilialResponseDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

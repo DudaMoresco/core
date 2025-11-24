@@ -1,4 +1,4 @@
-package com.serasa.core.doca;
+package com.duda.core.doca;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

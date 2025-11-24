@@ -1,6 +1,5 @@
-package com.serasa.core.caminhao;
+package com.duda.core.caminhao;
 
-import com.serasa.core.filial.FilialResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

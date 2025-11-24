@@ -1,4 +1,4 @@
-package com.serasa.core.doca;
+package com.duda.core.doca;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

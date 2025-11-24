@@ -1,4 +1,4 @@
-package com.serasa.core.demandatransporte;
+package com.duda.core.demandatransporte;
 
 public enum StatusDemandaTransporte {
     PROGRAMADA,

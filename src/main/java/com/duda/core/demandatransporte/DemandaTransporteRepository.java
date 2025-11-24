@@ -1,4 +1,4 @@
-package com.serasa.core.demandatransporte;
+package com.duda.core.demandatransporte;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

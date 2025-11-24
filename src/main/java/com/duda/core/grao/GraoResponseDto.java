@@ -1,4 +1,4 @@
-package com.serasa.core.grao;
+package com.duda.core.grao;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

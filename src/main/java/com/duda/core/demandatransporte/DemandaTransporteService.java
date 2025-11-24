@@ -1,7 +1,7 @@
-package com.serasa.core.demandatransporte;
+package com.duda.core.demandatransporte;
 
-import com.serasa.core.caminhao.CaminhaoResponseDto;
-import com.serasa.core.caminhao.CaminhaoService;
+import com.duda.core.caminhao.CaminhaoResponseDto;
+import com.duda.core.caminhao.CaminhaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

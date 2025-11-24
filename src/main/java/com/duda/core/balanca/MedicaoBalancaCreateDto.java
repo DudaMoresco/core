@@ -1,4 +1,4 @@
-package com.serasa.core.balanca;
+package com.duda.core.balanca;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,4 +1,4 @@
-package com.serasa.core.grao;
+package com.duda.core.grao;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;

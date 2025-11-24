@@ -1,4 +1,4 @@
-package com.serasa.core.filial;
+package com.duda.core.filial;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
