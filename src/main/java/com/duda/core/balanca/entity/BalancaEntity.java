@@ -1,11 +1,7 @@
 package com.duda.core.balanca.entity;
 
-import com.duda.core.balanca.enumeration.StatusBalanca;
-import com.duda.core.grao.entity.GraoEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -35,11 +31,6 @@ public class BalancaEntity {
     @Column(name = "id_doca", nullable = false)
     private Long idDoca;
 
-    @NotNull(message = "Status é obrigatório")
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private StatusBalanca status;
-
     @CreationTimestamp
     @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
@@ -54,9 +45,8 @@ public class BalancaEntity {
     @Column(name = "updated_by", nullable = false)
     private String updatedBy;
 
-    public BalancaEntity(Long idDoca, StatusBalanca status, String createdBy) {
+    public BalancaEntity(Long idDoca, String createdBy) {
         this.idDoca = idDoca;
-        this.status = status;
         this.createdBy = createdBy;
         this.updatedBy = createdBy;
     }

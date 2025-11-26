@@ -54,7 +54,6 @@ public class PesoEstabilizadoListener {
     @RabbitListener(queues = RabbitMQConfig.FILA_BALANCA_ESTABILIZADA)
     @Transactional
     public void processarPesoEstabilizado(PesoEstabilizadoDTO pesoEstabilizado) {
-        logger.info("PESO ESTABILIZADO ");
 
         DemandaTransporteEntity demanda = demandaTransporteService
                 .getByCaminhaoPlacaAndStatus(

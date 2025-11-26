@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -74,35 +73,5 @@ public class BalancaController {
         Optional<BalancaResponseDto> balanca = balancaService.getBalancaById(id);
         return balanca.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
-    }
-
-    @Operation(
-            summary = "Ativar balança",
-            description = "Ativa uma balança pelo seu ID, caso esteja em estado LIVRE."
-    )
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Balança ativada com sucesso"),
-            @ApiResponse(responseCode = "400", description = "ID inválido ou balança em estado não permitido"),
-            @ApiResponse(responseCode = "404", description = "Balança não encontrada")
-    })
-    @PatchMapping("/{id}/ativar")
-    public ResponseEntity<?> ativarBalancaById(@PathVariable Long id) {
-        balancaService.ativarBalancaById(id);
-        return ResponseEntity.ok().build();
-    }
-
-    @Operation(
-            summary = "Desativar balança",
-            description = "Define a balança como LIVRE, caso esteja em estado ATIVA."
-    )
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Balança desativada com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Estado inválido para desativação"),
-            @ApiResponse(responseCode = "404", description = "Balança não encontrada")
-    })
-    @PatchMapping("/{id}/desativar")
-    public ResponseEntity<?> desativarBalancaById(@PathVariable Long id) {
-        balancaService.liberarBalancaById(id);
-        return ResponseEntity.ok().build();
     }
 }

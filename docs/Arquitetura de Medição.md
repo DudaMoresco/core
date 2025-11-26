@@ -1,4 +1,4 @@
-# ⚙️ **Arquitetura de Mediçao e Processamento Assíncrono**
+# **Arquitetura de Mediçao e Processamento Assíncrono**
 
 O sistema de pesagem foi projetado para lidar com **alto volume de leituras** enviadas pelos ESP32 a cada 100ms. Para garantir escalabilidade, resiliência e desacoplamento entre etapas, toda a pipeline funciona sobre um **modelo assíncrono baseado em eventos** utilizando RabbitMQ (ou Kafka).
 
@@ -6,7 +6,7 @@ A seguir descrevemos cada parte do fluxo.
 
 ---
 
-## 🛰️ **1. Ingestão das Leituras da Balança (API REST)**
+## **1. Ingestão das Leituras da Balança (API REST)**
 
 As leituras brutas enviadas pelo ESP32 chegam ao endpoint:
 
@@ -41,7 +41,7 @@ Isso evita travar a API mesmo quando há grande volume de leituras.
 
 ---
 
-## 🔄 **2. Fase de Estabilização do Peso**
+## **2. Fase de Estabilização do Peso**
 
 As leituras enviadas pela API são capturadas pelo listener:
 
@@ -94,7 +94,7 @@ Portanto, o sistema converte **milhares de leituras brutas** em **uma única lei
 
 ---
 
-## 📦 **3. Consolidação da Pesagem**
+## **3. Consolidação da Pesagem**
 
 Quem consome o evento de peso estabilizado é o:
 
@@ -123,12 +123,12 @@ Esse é o evento que sinaliza que a pesagem está **totalmente finalizada e pers
 
 ---
 
-## 🏭 **4. Pós-Processamentos da Pesagem**
+## **4. Pós-Processamentos da Pesagem**
 
-O evento `pesagem.concluida` é consumido por múltiplos serviços especializados.
+O evento `pesagem.concluida` pode ser consumido por múltiplos serviços especializados.
 Isso permite um modelo de **event-driven micro-operations**, onde cada ação fica isolada.
 
-### ✔ **4.1. Atualização do Estoque da Doca**
+### **4.1. Atualização do Estoque da Doca**
 
 Listener:
 
@@ -141,19 +141,6 @@ Ações:
 * Localiza o estoque daquela doca e tipo de grão.
 * Debita a quantidade correspondente ao peso líquido.
 * Persiste o novo valor de estoque.
-
-### ✔ **4.2. Liberação da Balança**
-
-Listener:
-
-```
-PesagemConcluidaBalancaListener
-```
-
-Ações:
-
-* Marca a balança como "livre" para receber outro caminhão.
-* Atualiza status no banco (e opcionalmente envia notificações).
 
 ---
 
@@ -170,7 +157,6 @@ sequenceDiagram
     participant L2 as PesoEstabilizadoListener
     participant DB as Banco de Dados
     participant ESTQ as EstoqueListener
-    participant BAL as BalancaListener
 
     ESP32 ->> API: POST /leituras (peso bruto)
     API ->> MQ: Evento: leitura.recebida
@@ -182,7 +168,6 @@ sequenceDiagram
     L2 ->> DB: Persistir pesagem
     L2 ->> MQ: Evento: pesagem.concluida
     MQ ->> ESTQ: Atualizar estoque
-    MQ ->> BAL: Liberar balança
 ```
 
 ---
@@ -196,5 +181,4 @@ sequenceDiagram
 | **LeiturasListener**         | Processa leituras brutas e detecta estabilização |
 | **PesoEstabilizadoListener** | Consolida a pesagem e salva no banco             |
 | **EstoqueDocaGraoListener**  | Atualiza estoque após pesagem concluída          |
-| **BalancaListener**          | Libera a balança para o próximo caminhão         |
 

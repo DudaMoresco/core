@@ -31,7 +31,6 @@ public class LeiturasListener {
             concurrency = "3-10"
     )
     public void processarLeitura(LeituraDto leitura) {
-        logger.info("LEITURA CHEGOU");
 
         Optional<PesoEstabilizadoDTO> pesoEstabilizadoDTO = estabilizadorPesoService.processarLeitura(leitura);
 
