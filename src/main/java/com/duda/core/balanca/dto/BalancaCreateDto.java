@@ -1,4 +1,4 @@
-package com.duda.core.balanca;
+package com.duda.core.balanca.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

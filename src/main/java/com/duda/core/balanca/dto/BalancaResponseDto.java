@@ -1,5 +1,6 @@
-package com.duda.core.balanca;
+package com.duda.core.balanca.dto;
 
+import com.duda.core.balanca.entity.BalancaEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -13,7 +14,7 @@ public class BalancaResponseDto {
     public static BalancaResponseDto from(BalancaEntity entity) {
         return new BalancaResponseDto(
                 entity.getId(),
-                entity.getDoca().getId()
+                entity.getIdDoca()
         );
     }
 }
