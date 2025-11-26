@@ -1,5 +1,6 @@
-package com.duda.core.caminhao;
+package com.duda.core.caminhao.repository;
 
+import com.duda.core.caminhao.entity.CaminhaoEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

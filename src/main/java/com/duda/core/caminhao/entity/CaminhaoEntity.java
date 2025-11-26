@@ -1,4 +1,4 @@
-package com.duda.core.caminhao;
+package com.duda.core.caminhao.entity;
 
 
 import jakarta.persistence.Entity;
@@ -47,13 +47,13 @@ public class CaminhaoEntity {
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "created_by", length = 255, nullable = false)
+    @Column(name = "created_by", nullable = false)
     private String createdBy;
 
-    @Column(name = "updated_by", length = 255, nullable = false)
+    @Column(name = "updated_by")
     private String updatedBy;
 
     public CaminhaoEntity(String placa, BigDecimal tara, String createdBy) {
