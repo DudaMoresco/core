@@ -1,4 +1,4 @@
-package com.duda.core.demandatransporte;
+package com.duda.core.demandatransporte.enumeration;
 
 public enum StatusDemandaTransporte {
     PROGRAMADA,
