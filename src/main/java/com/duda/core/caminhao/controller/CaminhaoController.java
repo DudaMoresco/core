@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/caminhoes")
+@RequestMapping("/v1/caminhoes")
 @CrossOrigin(origins = "*")
 @Tag(name = "Caminhões", description = "Endpoints para gestão de caminhões")
 public class CaminhaoController {

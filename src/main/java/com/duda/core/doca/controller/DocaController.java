@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/docas")
+@RequestMapping("/v1/docas")
 @CrossOrigin(origins = "*")
 @Tag(
         name = "Docas",

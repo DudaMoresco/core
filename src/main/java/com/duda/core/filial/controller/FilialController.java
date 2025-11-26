@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/filiais")
+@RequestMapping("/v1/filiais")
 @Tag(name = "Filiais", description = "Endpoints para gerenciamento de filiais")
 public class FilialController {
 

@@ -1,5 +1,6 @@
-package com.duda.core.demandatransporte;
+package com.duda.core.demandatransporte.entity;
 
+import com.duda.core.demandatransporte.enumeration.StatusDemandaTransporte;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -10,18 +11,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "demanda_transporte")
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
+@Data
 public class DemandaTransporteEntity {
 
     @Id
@@ -49,13 +51,39 @@ public class DemandaTransporteEntity {
     @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "created_by", length = 255, updatable = false, nullable = false)
+    @Column(name = "created_by", updatable = false, nullable = false)
     private String createdBy;
 
     @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "updated_by", length = 255, nullable = false)
+    @Column(name = "updated_by")
     private String updatedBy;
+
+    public DemandaTransporteEntity(Long idCaminhao, Long idGrao, Long idFilial, StatusDemandaTransporte status,String createdBy ) {
+        this.idCaminhao = idCaminhao;
+        this.idGrao = idGrao;
+        this.idFilial = idFilial;
+        this.status = status;
+        this.createdBy = createdBy;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DemandaTransporteEntity demanda = (DemandaTransporteEntity) o;
+        return Objects.equals(id, demanda.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "DemandaTransporteEntity{id=" + id + '}';
+    }
 }
