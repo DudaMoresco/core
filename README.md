@@ -7,165 +7,209 @@
 
 Sistema desenvolvido para gerenciar o transporte e pesagem de grãos, oferecendo controle completo do processo desde a demanda de transporte até a pesagem final estabilizada.
 
-## 📋 Funcionalidades
+---
+
+## Funcionalidades
 
 ### Principais Módulos
-- **Gestão de Filiais**: Cadastro e controle de unidades operacionais
-- **Gestão de Caminhões**: Controle da frota com informações de tara
-- **Gestão de Grãos**: Cadastro de produtos com preços de compra
-- **Gestão de Docas**: Controle das estruturas de carregamento
-- **Sistema de Balanças**: Equipamentos de pesagem vinculados às docas
-- **Demandas de Transporte**: Solicitações de transporte com status
-- **Pesagem Automatizada**: Sistema inteligente de estabilização de peso
+
+* **Gestão de Filiais**
+* **Gestão de Caminhões** (inclui tara)
+* **Gestão de Grãos** (inclui preço de compra por tonelada)
+* **Gestão de Docas**
+* **Sistema de Balanças**
+* **Demandas de Transporte**
+* **Pesagem Automatizada com Estabilização**
 
 ### Funcionalidades Avançadas
-- **Estabilização Automática**: Processamento em tempo real das medições para determinar peso estabilizado
-- **APIs RESTful**: Interface completa para integração com sistemas externos
-- **Documentação Swagger**: Interface interativa para teste e documentação das APIs
-- **Auditoria**: Controle de criação e atualização com timestamps e usuários
-- **Processamento Assíncrono**: Worker para processamento de pesagens em background
 
-## 🛠 Tecnologias Utilizadas
+* Estabilização automática das leituras de peso
+* Processamento assíncrono via mensageria (RabbitMQ)
+* APIs RESTful
+* Documentação com Swagger/OpenAPI
+* Auditoria automática
 
-| Tecnologia | Versão | Uso |
-|------------|--------|-----|
-| **Java** | 21 | Linguagem principal |
-| **Spring Boot** | 3.5.7 | Framework principal |
-| **Spring Data JPA** | Integrado | Persistência de dados |
-| **JOOQ** | 8.2 | Query builder tipo-safe |
-| **SQLite** | 3.45.0 | Banco de dados |
-| **Hibernate** | 6.5.0 | ORM |
-| **SpringDoc OpenAPI** | 2.6.0 | Documentação da API |
-| **Lombok** | 1.18.34 | Redução de boilerplate |
-| **Gradle** | - | Gerenciamento de dependências |
+---
 
-## 🚀 Como Executar
+## Tecnologias Utilizadas
+
+| Tecnologia        | Versão  | Uso                    |
+| ----------------- | ------- | ---------------------- |
+| Java              | 21      | Linguagem principal    |
+| Spring Boot       | 3.5.7   | Framework principal    |
+| Spring Data JPA   | -       | Persistência           |
+| SQLite            | 3.45.0  | Banco de dados         |
+| Hibernate         | 6.5.0   | ORM                    |
+| SpringDoc OpenAPI | 2.6.0   | Documentação           |
+| Lombok            | 1.18.34 | Redução de boilerplate |
+| Gradle            | -       | Build                  |
+
+---
+
+## Como Executar
 
 ### Pré-requisitos
-- **Java 21** ou superior
-- **Gradle** (ou usar o wrapper incluído)
 
-### Executando a Aplicação
+* Java 21+
+* Gradle (ou usar o wrapper incluído)
+* Docker
 
-1. **Clone o repositório**
+---
+
+## Subindo o RabbitMQ (Obrigatório)
+
+O sistema utiliza **RabbitMQ** para processar medições e eventos de pesagem.
+Sem o RabbitMQ funcionando, nenhuma leitura de balança será processada.
+
+### Executando via Docker
+
+```bash
+docker run -d --hostname rabbit --name rabbitmq \
+  -p 5672:5672 -p 15672:15672 \
+  rabbitmq:3-management
+```
+
+### Acesso ao painel administrativo
+
+* URL: [http://localhost:15672](http://localhost:15672)
+* Usuário: `guest`
+* Senha: `guest`
+
+---
+
+## Inicializando a Aplicação
+
+1. Clone o repositório:
+
 ```bash
 git clone <url-do-repositorio>
 cd core
 ```
 
-2. **Execute a aplicação**
-```bash
-# Usando Gradle Wrapper (recomendado)
-./gradlew bootRun
+2. Execute:
 
-# Ou se tiver Gradle instalado
+```bash
+./gradlew bootRun
+```
+
+Ou:
+
+```bash
 gradle bootRun
 ```
 
-3. **Acesse a aplicação**
-- **API**: http://localhost:8080
-- **Documentação Swagger**: http://localhost:8080/swagger-ui.html
+3. Endpoints:
 
-### Build para Produção
-```bash
-./gradlew build
-java -jar build/libs/core-0.0.1-SNAPSHOT.jar
+* API: [http://localhost:8080](http://localhost:8080)
+* Swagger UI: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+
+---
+
+## Banco de Dados
+
+O banco SQLite é criado automaticamente na primeira execução conforme o arquivo:
+
+[`schema.sql`](src/main/resources/database/schema.sql)
+
+### Modelo de Dados (ERD)
+
+```mermaid
+erDiagram
+    FILIAL {
+        INTEGER id PK
+        VARCHAR nome
+        VARCHAR cnpj
+    }
+
+    CAMINHAO {
+        INTEGER id PK
+        VARCHAR placa
+        DECIMAL tara
+    }
+
+    GRAO {
+        INTEGER id PK
+        VARCHAR nome
+        DECIMAL preco_compra_por_tonelada
+    }
+
+    DOCA {
+        INTEGER id PK
+    }
+
+    BALANCA {
+        INTEGER id PK
+        INTEGER id_doca FK
+        VARCHAR status
+    }
+
+    DEMANDA_TRANSPORTE {
+        INTEGER id PK
+        INTEGER id_caminhao FK
+        INTEGER id_grao FK
+        INTEGER id_filial FK
+        VARCHAR status
+    }
+
+    PESAGEM {
+        INTEGER id PK
+        INTEGER id_demanda FK
+        INTEGER id_balanca FK
+        INTEGER id_caminhao FK
+        INTEGER id_grao FK
+        INTEGER id_filial FK
+        INTEGER id_doca FK
+        DECIMAL peso_bruto
+        DECIMAL tara
+        DECIMAL peso_liquido
+        DECIMAL custo
+    }
+
+    ESTOQUE_DOCA_GRAO {
+        INTEGER id PK
+        INTEGER id_doca FK
+        INTEGER id_grao FK
+        DECIMAL qtd_max
+        DECIMAL qtd_atual
+    }
+
+    DOCA ||--o{ BALANCA : possui
+    FILIAL ||--o{ DEMANDA_TRANSPORTE : origina
+    CAMINHAO ||--o{ DEMANDA_TRANSPORTE : recebe
+    GRAO ||--o{ DEMANDA_TRANSPORTE : tipo
+
+    CAMINHAO ||--o{ PESAGEM : registrado
+    GRAO ||--o{ PESAGEM : tipo
+    FILIAL ||--o{ PESAGEM : origina
+    BALANCA ||--o{ PESAGEM : realiza
+    DOCA ||--o{ PESAGEM : ocorre_em
+    DEMANDA_TRANSPORTE ||--o{ PESAGEM : gera
+
+    DOCA ||--o{ ESTOQUE_DOCA_GRAO : possui
+    GRAO ||--o{ ESTOQUE_DOCA_GRAO : estoque
 ```
 
-## 📁 Estrutura do Projeto
+---
 
-```
-src/main/java/com/serasa/core/
-├── CoreApplication.java              # Classe principal
-├── balanca/                          # Módulo de balanças
-│   ├── BalancaController.java        # API REST para balanças
-│   ├── BalancaService.java          # Lógica de negócio
-│   ├── BalancaEntity.java           # Entidade JPA
-│   ├── BalancaRepository.java       # Repositório de dados
-│   └── MedicaoBalanca*.java         # Gestão de medições
-├── caminhao/                        # Módulo de caminhões
-├── doca/                           # Módulo de docas
-├── filial/                         # Módulo de filiais
-├── grao/                           # Módulo de grãos
-├── demandatransporte/              # Módulo de demandas
-└── pesagem/                        # Módulo de pesagem
-    ├── PesagemEntity.java          # Pesagens consolidadas
-    ├── PesagemRepository.java      # Repositório de pesagens
-    └── EstabilizacaoWorker.java    # Worker de estabilização
-```
+## Sistema de Estabilização e Arquitetura de Medição
 
-## 🔗 APIs Disponíveis
+Para detalhes completos sobre:
 
-### Principais Endpoints
+* Funcionamento do algoritmo de estabilização
+* Processamento assíncrono (eventos)
+* Critérios de estabilização
+* Arquitetura do pipeline de leitura → estabilização → pesagem consolidada
 
-| Módulo | Endpoint | Métodos | Descrição |
-|--------|----------|---------|-----------|
-| **Filiais** | `/api/filiais` | GET, POST | Gestão de filiais |
-| **Caminhões** | `/api/caminhoes` | GET, POST | Gestão de caminhões |
-| **Grãos** | `/api/graos` | GET, POST | Gestão de grãos |
-| **Docas** | `/api/docas` | GET, POST | Gestão de docas |
-| **Balanças** | `/api/balancas` | GET, POST | Gestão de balanças |
-| **Medições** | `/api/balancas/medicao` | POST | Registro de medições |
+Acesse:
 
-### Exemplo de Uso
+[`docs/estabilizacao.md`](docs/Lógica%20de%20estabilização.md)
+[`docs/arquitetura-eventos.md`](docs/Arquitetura%20de%20Medição.md)
 
-**Criar uma filial:**
-```bash
-curl -X POST http://localhost:8080/api/filiais \
-  -H "Content-Type: application/json" \
-  -d '{
-    "nome": "Filial Centro",
-    "cnpj": "12.345.678/0001-90",
-    "createdBy": "admin"
-  }'
-```
+---
 
-**Registrar medição de balança:**
-```bash
-curl -X POST http://localhost:8080/api/balancas/medicao \
-  -H "Content-Type: application/json" \
-  -d '{
-    "idBalanca": 1,
-    "placa": "ABC1234",
-    "peso": 15420.75,
-    "createdBy": "sistema"
-  }'
-```
+## Documentação da API
 
-## 🗄 Banco de Dados
+Com a aplicação rodando:
 
-### Modelo de Dados
-O sistema utiliza SQLite com as seguintes tabelas principais:
-
-- **filial**: Unidades operacionais
-- **caminhao**: Frota de veículos
-- **grao**: Produtos transportados
-- **doca**: Estruturas de carregamento
-- **balanca**: Equipamentos de pesagem
-- **demanda_transporte**: Solicitações de transporte
-- **medicao_balanca**: Medições brutas das balanças
-- **pesagem**: Pesagens consolidadas e estabilizadas
-
-### Inicialização
-O banco é criado automaticamente na primeira execução usando o arquivo [`schema.sql`](src/main/resources/database/schema.sql).
-
-## ⚙ Sistema de Estabilização
-
-O sistema possui um algoritmo inteligente de estabilização de peso que:
-
-1. **Coleta medições** em tempo real (100 medições nos últimos 10 segundos)
-2. **Calcula desvio padrão** das medições
-3. **Verifica estabilização** (desvio < 5kg)
-4. **Consolida pesagem** quando estabilizada
-5. **Finaliza demanda** automaticamente
-
-### Configurações de Estabilização
-- **Limiar de desvio**: 5.0 kg
-- **Janela temporal**: 10 segundos
-- **Mínimo de medições**: 100
-
-## 📖 Documentação da API
-
-Com a aplicação rodando, acesse:
-- **Swagger UI**: http://localhost:8080/swagger-ui.html
-- **OpenAPI JSON**: http://localhost:8080/v3/api-docs
+* Swagger UI: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+* OpenAPI JSON: [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)

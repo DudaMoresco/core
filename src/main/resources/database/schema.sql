@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS doca (
 CREATE TABLE IF NOT EXISTS balanca (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     id_doca INTEGER NOT NULL,
+    status VARCHAR(255) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_by VARCHAR(255) NOT NULL,
     updated_at TIMESTAMP,
@@ -52,19 +53,6 @@ CREATE TABLE IF NOT EXISTS balanca (
 
     FOREIGN KEY (id_doca) REFERENCES doca(id)
 );
-
-CREATE TABLE IF NOT EXISTS medicao_balanca (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    id_balanca INTEGER NOT NULL,
-    placa VARCHAR(8) NOT NULL,
-    peso DECIMAL(10,3) NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    created_by VARCHAR(255) NOT NULL
-);
-
-CREATE INDEX IF NOT EXISTS idx_medicao_balanca_placa ON medicao_balanca(placa);
-CREATE INDEX IF NOT EXISTS idx_medicao_balanca_id_balanca ON medicao_balanca(id_balanca);
-
 
 CREATE TABLE IF NOT EXISTS demanda_transporte (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -89,14 +77,37 @@ CREATE TABLE IF NOT EXISTS pesagem (
     id_caminhao INTEGER NOT NULL,
     id_grao INTEGER NOT NULL,
     id_filial INTEGER NOT NULL,
+    id_doca INTEGER NOT NULL,
     peso_bruto DECIMAL(10,3) NOT NULL,
     tara DECIMAL(10,3) NOT NULL,
+    peso_liquido DECIMAL(10,3) NOT NULL,
+    custo DECIMAL(10,2) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_by VARCHAR(255) NOT NULL,
 
     FOREIGN KEY (id_caminhao) REFERENCES caminhao(id),
     FOREIGN KEY (id_grao) REFERENCES grao(id),
     FOREIGN KEY (id_filial) REFERENCES filial(id),
+    FOREIGN KEY (id_doca) REFERENCES doca(id),
     FOREIGN KEY (id_balanca) REFERENCES balanca(id),
     FOREIGN KEY (id_demanda) REFERENCES demanda_transporte(id)
 );
+
+CREATE TABLE IF NOT EXISTS estoque_doca_grao (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_doca INTEGER NOT NULL,
+    id_grao INTEGER NOT NULL,
+    qtd_max DECIMAL(10, 3) NOT NULL,
+    qtd_atual DECIMAL(10, 3) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_by VARCHAR(255) NOT NULL,
+    updated_at TIMESTAMP,
+    updated_by VARCHAR(255),
+
+    FOREIGN KEY (id_grao) REFERENCES grao(id),
+    FOREIGN KEY (id_doca) REFERENCES doca(id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_estoque_doca_grao_doca ON estoque_doca_grao(id_doca);
+CREATE INDEX IF NOT EXISTS idx_estoque_doca_grao_grao ON estoque_doca_grao(id_grao);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_estoque_doca_grao_unique ON estoque_doca_grao(id_doca, id_grao);
