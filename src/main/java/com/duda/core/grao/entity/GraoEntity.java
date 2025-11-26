@@ -1,4 +1,4 @@
-package com.duda.core.grao;
+package com.duda.core.grao.entity;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -45,14 +45,14 @@ public class GraoEntity {
     @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "created_by", length = 255, updatable = false, nullable = false)
+    @Column(name = "created_by", updatable = false, nullable = false)
     private String createdBy;
 
     @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "updated_by", length = 255, nullable = false)
+    @Column(name = "updated_by")
     private String updatedBy;
 
     public GraoEntity(String nome, BigDecimal precoCompraPorTonelada, String createdBy) {
@@ -76,8 +76,6 @@ public class GraoEntity {
 
     @Override
     public String toString() {
-        return "Grao{" +
-                "id=" + id +
-                '}';
+        return "GraoEntity{id=" + id + '}';
     }
 }

@@ -1,5 +1,6 @@
-package com.duda.core.grao;
+package com.duda.core.grao.dto;
 
+import com.duda.core.grao.entity.GraoEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

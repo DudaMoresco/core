@@ -1,5 +1,9 @@
 package com.duda.core.grao;
 
+import com.duda.core.grao.dto.GraoCreateDto;
+import com.duda.core.grao.dto.GraoResponseDto;
+import com.duda.core.grao.entity.GraoEntity;
+import com.duda.core.grao.repository.GraoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +21,7 @@ public class GraoService {
         this.graoRepository = graoRepository;
     }
 
-    public Long createGrao(GraoCreateDto newGrao) {
+    public GraoResponseDto create(GraoCreateDto newGrao) {
         GraoEntity grao = new GraoEntity(
                 newGrao.getNome(),
                 newGrao.getPrecoCompraPorTonelada(),
@@ -26,7 +30,7 @@ public class GraoService {
 
         GraoEntity savedGrao = graoRepository.save(grao);
 
-        return savedGrao.getId();
+        return GraoResponseDto.from(savedGrao);
     }
 
     public List<GraoResponseDto> getAllGraos() {
