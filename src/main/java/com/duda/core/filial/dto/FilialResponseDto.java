@@ -1,5 +1,6 @@
-package com.duda.core.filial;
+package com.duda.core.filial.dto;
 
+import com.duda.core.filial.entity.FilialEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

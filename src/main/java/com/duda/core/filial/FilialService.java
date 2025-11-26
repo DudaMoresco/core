@@ -1,6 +1,9 @@
 package com.duda.core.filial;
 
-
+import com.duda.core.filial.dto.FilialCreateDto;
+import com.duda.core.filial.dto.FilialResponseDto;
+import com.duda.core.filial.entity.FilialEntity;
+import com.duda.core.filial.repository.FilialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +21,7 @@ public class FilialService {
         this.filialRepository = filialRepository;
     }
 
-
-    public Long createFilial(FilialCreateDto newFilial) {
+    public FilialResponseDto create(FilialCreateDto newFilial) {
 
         if (filialRepository.existsByCnpj(newFilial.getCnpj())) {
             throw new IllegalArgumentException("Já existe uma filial cadastrada com o CNPJ informado.");
@@ -32,7 +34,7 @@ public class FilialService {
 
         FilialEntity savedFilial = filialRepository.save(filial);
 
-        return savedFilial.getId();
+        return FilialResponseDto.from(savedFilial);
     }
 
     public List<FilialResponseDto> getAllFiliais() {

@@ -1,4 +1,4 @@
-package com.duda.core.filial;
+package com.duda.core.filial.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

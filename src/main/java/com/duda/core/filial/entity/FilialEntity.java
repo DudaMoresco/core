@@ -1,4 +1,4 @@
-package com.duda.core.filial;
+package com.duda.core.filial.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -76,9 +76,6 @@ public class FilialEntity {
 
     @Override
     public String toString() {
-        return "Filial{" +
-                "id=" + id +
-                ", cnpj='" + cnpj + '\'' +
-                '}';
+        return "FilialEntity{id=" + id + "}";
     }
 }
