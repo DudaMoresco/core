@@ -1,4 +1,4 @@
-package com.duda.core.doca;
+package com.duda.core.doca.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,10 +33,10 @@ public class DocaEntity {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @Column(name = "created_by", length = 255, nullable = false)
+    @Column(name = "created_by", nullable = false)
     private String createdBy;
 
-    @Column(name = "updated_by", length = 255, nullable = false)
+    @Column(name = "updated_by", nullable = false)
     private String updatedBy;
 
     public DocaEntity(String createdBy) {
@@ -59,8 +59,6 @@ public class DocaEntity {
 
     @Override
     public String toString() {
-        return "Doca{" +
-                "id=" + id +
-                '}';
+        return "DocaEntity{id=" + id + "}";
     }
 }

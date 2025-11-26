@@ -1,5 +1,8 @@
 package com.duda.core.doca;
 
+import com.duda.core.doca.dto.DocaResponseDto;
+import com.duda.core.doca.entity.DocaEntity;
+import com.duda.core.doca.repository.DocaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +21,10 @@ public class DocaService {
         this.docaRepository = docaRepository;
     }
 
-    public Long createDoca() {
+    public DocaResponseDto create() {
         DocaEntity doca = new DocaEntity("sistema");
         DocaEntity savedDoca = docaRepository.save(doca);
-        return savedDoca.getId();
+        return DocaResponseDto.from(savedDoca);
     }
 
     public List<DocaResponseDto> getAllDocas() {

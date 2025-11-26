@@ -1,5 +1,6 @@
-package com.duda.core.doca;
+package com.duda.core.doca.dto;
 
+import com.duda.core.doca.entity.DocaEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
